@@ -2,23 +2,22 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container text-center">
         <div>
-            <span class="font-weight-bold">Title:</span>
-            {{$post->title}}
+            <h1 class="mb-3">{{$post->title}}</h1>
         </div>
 
-        <div>
-            <span class="font-weight-bold">Content:</span>
+        <h4>
+            <span class="font-weight-bold mb-3">Content:</span>
             {{$post->content}}
-        </div>
+        </h4>
 
         <div>
-            <span class="font-weight-bold">Slug:</span>
+            <span class="font-weight-bold mb-3">Slug:</span>
             {{$post->slug}}
         </div>
 
-        <a href="{{route('admin.posts.index')}}" class="btn btn-primary">Back</a>
+        <a href="{{route('admin.posts.index')}}" class="btn btn-primary mb-3">Back</a>
     </div>
 
    

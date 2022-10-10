@@ -22,10 +22,14 @@
                         <th scope="row">{{$post->id}}</th>
                         <td>{{$post->title}}</td>
                         <td>{{$post->slug}}</td>
-                        <td>
-                            <a href="{{route('admin.posts.show', ['post' => $post->id])}}" class="btn btn-primary">Show</a>
-                            <a href="{{route('admin.posts.edit', ['post' => $post->id])}}" class="btn btn-warning">Edit</a>
-                            <a href="#" class="btn btn-danger">Delete</a>
+                        <td class="d-flex">
+                            <a href="{{route('admin.posts.show', ['post' => $post->id])}}" class="btn btn-primary mr-2">Show</a>
+                            <a href="{{route('admin.posts.edit', ['post' => $post->id])}}" class="btn btn-warning mr-2">Edit</a>
+                            <form method="POST" action="{{route('admin.posts.destroy', ['post' => $post->id])}}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger mr-2">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
