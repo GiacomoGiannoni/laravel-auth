@@ -4,8 +4,8 @@
 
     <div class="container">
 
-        <div>
-            <a href="{{route('admin.posts.create')}}" class="btn btn-primary">Add new post</a>
+        <div class="mb-4 d-flex justify-content-end">
+            <a href="{{route('admin.posts.create')}}" class="btn btn-primary">+ Add new post</a>
         </div>
         <table class="table table-striped">
             <thead>
@@ -24,7 +24,7 @@
                         <td>{{$post->slug}}</td>
                         <td>
                             <a href="{{route('admin.posts.show', ['post' => $post->id])}}" class="btn btn-primary">Show</a>
-                            <a href="#" class="btn btn-warning">Edit</a>
+                            <a href="{{route('admin.posts.edit', ['post' => $post->id])}}" class="btn btn-warning">Edit</a>
                             <a href="#" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>

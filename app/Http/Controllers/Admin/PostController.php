@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -37,7 +38,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required|max:65535'
+        ]);
+        $data = $request->all();
+
+        $post = new Post();
+        $post->fill($data);
+
+        $slug = $this->calculateSlug($post->title);
+        
+        $post->slug = $slug;
+
+        $post->save();
+
+        return redirect()->route('admin.posts.index')->with('status', 'Post creato con successo!');
     }
 
     /**
@@ -48,7 +64,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('admin.post.show', compact('post'));
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -57,9 +73,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -69,9 +85,35 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, Post $post) {
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required|max:65535'
+        ]);
+        $data = $request->all();
+        if ($post->title !== $data['title']) {
+            $data['slug'] = $this->calculateSlug($data['title']);
+        };
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.index')->with('status', 'Aggiornato con successo');
+    }
+
+    protected function calculateSlug($title) {
+        $slug = str::slug($title, '-');
+
+        $checkPost = Post::where('slug', $slug)->first();
+
+        $counter = 1;
+
+        while($checkPost) {
+            $slug = str::slug($title . '-' . $counter, '-');
+            $counter++;
+            $checkPost = Post::where('slug', $slug)->first();
+        };
+
+        return $slug;
     }
 
     /**

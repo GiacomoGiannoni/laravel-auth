@@ -3,14 +3,20 @@
 @section('content')
 
     <div class="container">
-        <span class="font-weight-bold">Title:</span>
-        {{$post->title}}
+        <div>
+            <span class="font-weight-bold">Title:</span>
+            {{$post->title}}
+        </div>
 
-        <span class="font-weight-bold">Content:</span>
-        {{$post->content}}
+        <div>
+            <span class="font-weight-bold">Content:</span>
+            {{$post->content}}
+        </div>
 
-        <span class="font-weight-bold">Slug:</span>
-        {{$post->slug}}
+        <div>
+            <span class="font-weight-bold">Slug:</span>
+            {{$post->slug}}
+        </div>
 
         <a href="{{route('admin.posts.index')}}" class="btn btn-primary">Back</a>
     </div>
